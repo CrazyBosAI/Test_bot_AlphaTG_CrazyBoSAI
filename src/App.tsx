@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { LoginPage } from './components/auth/LoginPage';
 import { RegisterPage } from './components/auth/RegisterPage';
 import { CreateBotModal } from './components/bots/CreateBotModal';
+import { CreateSignalBotPage } from './components/bots/CreateSignalBotPage';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { SubscriptionPage } from './components/subscription/SubscriptionPage';
 import { ReferralPage } from './components/referrals/ReferralPage';
@@ -54,10 +55,6 @@ const MainApp: React.FC = () => {
         return <SubscriptionPage />;
       case 'referrals':
         return <ReferralPage />;
-      case 'subscription':
-        return <SubscriptionPage />;
-      case 'referrals':
-        return <ReferralPage />;
       default:
         return <Dashboard />;
     }
@@ -101,6 +98,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/create-signal-bot" element={<CreateSignalBotPage />} />
           <Route path="/*" element={<MainApp />} />
         </Routes>
       </Router>
