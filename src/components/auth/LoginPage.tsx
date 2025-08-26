@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TrendingUp, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -11,7 +11,6 @@ export const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const { signIn } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +22,6 @@ export const LoginPage: React.FC = () => {
     if (error) {
       setError(error.message);
     }
-      // Redirect to dashboard after successful login
-      navigate('/', { replace: true });
     
     setLoading(false);
   };
@@ -35,10 +32,10 @@ export const LoginPage: React.FC = () => {
         <div className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-6">
             <TrendingUp className="w-10 h-10 text-blue-500" />
-            <h1 className="text-3xl font-bold text-white">FibarsBot</h1>
+            <h1 className="text-3xl font-bold text-white">CryptoTrader Pro</h1>
           </div>
           <h2 className="text-2xl font-semibold text-gray-300">Welcome back</h2>
-          <p className="text-gray-400 mt-2">Sign in to your account</p>
+          <p className="text-gray-400 mt-2">Sign in to your trading account</p>
         </div>
 
         <div className="bg-gray-800 rounded-xl p-8 border border-gray-700">

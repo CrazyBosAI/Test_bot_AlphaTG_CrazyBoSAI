@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TrendingUp, Mail, Lock, Eye, EyeOff, AlertCircle, User, Gift } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -18,7 +18,6 @@ export const RegisterPage: React.FC = () => {
   const [success, setSuccess] = useState('');
 
   const { signUp } = useAuth();
-  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -54,11 +53,7 @@ export const RegisterPage: React.FC = () => {
     if (error) {
       setError(error.message);
     } else {
-      setSuccess('Account created successfully!');
-      // Redirect to dashboard after successful registration
-      setTimeout(() => {
-        navigate('/', { replace: true });
-      }, 1500);
+      setSuccess('Account created successfully! Please check your email to verify your account.');
     }
     
     setLoading(false);

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Bot, Plus, Play, Pause, Settings, TrendingUp, AlertCircle, Zap } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Bot, Plus, Play, Pause, Settings, TrendingUp, AlertCircle } from 'lucide-react';
 import { supabase, TradingBot } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -11,7 +10,6 @@ interface TradingBotsProps {
 
 export const TradingBots: React.FC<TradingBotsProps> = ({ onCreateBot }) => {
   const { userProfile } = useAuth();
-  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('all');
   const [bots, setBots] = useState<TradingBot[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,22 +90,13 @@ export const TradingBots: React.FC<TradingBotsProps> = ({ onCreateBot }) => {
           <Bot className="w-8 h-8 mr-3 text-blue-400" />
           Trading Bots
         </h1>
-        <div className="flex items-center space-x-3">
-          <button 
-            onClick={() => navigate('/create-signal-bot')}
-            className="bg-teal-600 hover:bg-teal-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
-          >
-            <Zap className="w-5 h-5" />
-            <span>Create Signal Bot</span>
-          </button>
-          <button 
-            onClick={onCreateBot}
-            className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
-          >
-            <Plus className="w-5 h-5" />
-            <span>Create Bot</span>
-          </button>
-        </div>
+        <button 
+          onClick={onCreateBot}
+          className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
+        >
+          <Plus className="w-5 h-5" />
+          <span>Create Bot</span>
+        </button>
       </div>
 
       {/* Summary Stats */}
@@ -186,46 +175,27 @@ export const TradingBots: React.FC<TradingBotsProps> = ({ onCreateBot }) => {
             <Bot className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-400 mb-2">No bots found</h3>
             <p className="text-gray-500 mb-6">Create your first trading bot to get started</p>
-            <div className="flex items-center justify-center space-x-4">
-              <button 
-                onClick={() => navigate('/create-signal-bot')}
-                className="bg-teal-600 hover:bg-teal-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
-              >
-                <Zap className="w-5 h-5" />
-                <span>Create Signal Bot</span>
-              </button>
-              <button 
-                onClick={onCreateBot}
-                className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition-colors"
-              >
-                Create Your First Bot
-              </button>
-            </div>
+            <button 
+              onClick={onCreateBot}
+              className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Create Your First Bot
+            </button>
           </div>
         ) : (
           filteredBots.map((bot) => (
           <div key={bot.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  bot.strategy_type === 'signal' 
-                    ? 'bg-teal-600 bg-opacity-20' 
-                    : 'bg-blue-600 bg-opacity-20'
-                }`}>
-                  {bot.strategy_type === 'signal' ? (
-                    <Zap className="w-6 h-6 text-teal-400" />
-                  ) : (
-                    <Bot className="w-6 h-6 text-blue-400" />
-                  )}
+                <div className="w-12 h-12 bg-blue-600 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <Bot className="w-6 h-6 text-blue-400" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">{bot.name}</h3>
                   <div className="flex items-center space-x-4 text-sm text-gray-400">
                     <span>{bot.trading_pair}</span>
                     <span>•</span>
-                    <span className={bot.strategy_type === 'signal' ? 'text-teal-400' : ''}>
-                      {bot.strategy_type === 'signal' ? 'Signal Bot' : bot.strategy_type}
-                    </span>
+                    <span>{bot.strategy_type}</span>
                     <span>•</span>
                     <span>Created {new Date(bot.created_at).toLocaleDateString()}</span>
                   </div>
